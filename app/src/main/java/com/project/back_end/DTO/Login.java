@@ -1,6 +1,43 @@
 package com.project.back_end.DTO;
 
+/**
+ * This DTO class is used to receive login credentials from the frontend.
+ * It encapsulates the identifier (email or username) and password.
+ * No persistence annotations are included, as this is not a database entity.
+ */
 public class Login {
+
+    // The unique identifier of the user (email for Doctor/Patient, username for Admin)
+    private String identifier;
+
+    // The password provided by the user
+    private String password;
+
+    // Default constructor
+    public Login() {}
+
+    // Getters and Setters
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+}
+
+
+//package com.project.back_end.DTO;
+
+//public class Login {
     
 // 1. 'email' field:
 //    - Type: private String
