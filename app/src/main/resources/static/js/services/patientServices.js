@@ -1,7 +1,7 @@
 // patientServices
 import { API_BASE_URL } from "../config/config.js";
 const PATIENT_API = API_BASE_URL + '/patient'
-
+//const PATIENT_API = API_BASE_URL + '/api/patient';
 
 //For creating a patient in db
 export async function patientSignup(data) {
@@ -55,7 +55,7 @@ export async function getPatientData(token) {
 }
 
 // the Backend API for fetching the patient record(visible in Doctor Dashboard) and Appointments (visible in Patient Dashboard) are same based on user(patient/doctor).
-export async function getPatientAppointments(id, token, user) {
+/*export async function getPatientAppointments(id, token, user) {
   try {
     const response = await fetch(`${PATIENT_API}/${id}/${user}/${token}`);
     const data = await response.json();
@@ -70,6 +70,47 @@ export async function getPatientAppointments(id, token, user) {
     return null;
   }
 }
+/*
+export async function getPatientAppointments(date, patientName, token) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/appointments/${date}/${patientName}/${token}`);
+    const data = await response.json();
+    if (response.ok) {
+      return data.appointments || [];
+    }
+    return [];
+  } catch (error) {
+    console.error("Error fetching appointments:", error);
+    return [];
+  }
+}
+*/
+
+export async function getPatientAppointments(date, patientName, token) {
+  try {
+    const encodedName = encodeURIComponent(patientName);
+    const response = await fetch(`${API_BASE_URL}/appointments/${date}/${encodedName}`, {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    });
+
+    const data = await response.json();
+
+    console.log("Appointments response:", data);
+    console.log("Appointments received:", data.appointments);
+
+    if (response.ok) {
+      return data.appointments || [];
+    }
+    return [];
+  } catch (error) {
+    console.error("Error fetching appointments:", error);
+    return [];
+  }
+}
+
+
 
 export async function filterAppointments(condition, name, token) {
   try {
@@ -94,4 +135,5 @@ export async function filterAppointments(condition, name, token) {
     alert("Something went wrong!");
     return { appointments: [] };
   }
+
 }

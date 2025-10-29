@@ -1,7 +1,64 @@
-
 package com.project.back_end.controllers;
 
+import com.project.back_end.models.Admin;
+import com.project.back_end.services.Services1;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+
+@RestController
+@RequestMapping("${api.path}admin")
 public class AdminController {
+
+    private final Services1 service;
+
+    public AdminController(Services1 service) {
+        this.service = service;
+    }
+
+    // Endpoint para login de administrador
+    @PostMapping("/login")
+    public ResponseEntity<Map<String, String>> adminLogin(@RequestBody Admin admin) {
+        return service.validateAdmin(admin);
+    }
+
+    // ✅ Endpoint para validar token de administrador
+    @PostMapping("/validate")
+    public ResponseEntity<Map<String, String>> validateAdminToken(@RequestBody Map<String, String> payload) {
+        String token = payload.get("token");
+        return service.validateToken(token, "admin");
+    }
+}
+
+/*package com.project.back_end.controllers;
+
+import com.project.back_end.models.Admin;
+import com.project.back_end.services.Services1;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+
+@RestController
+@RequestMapping("${api.path}admin")
+public class AdminController {
+
+    private final Services1 service;
+
+    public AdminController(Services1 service) {
+        this.service = service;
+    }
+
+    // Endpoint para login de administrador
+    @PostMapping("/login")
+    public ResponseEntity<Map<String, String>> adminLogin(@RequestBody Admin admin) {
+        return service.validateAdmin(admin);
+    }
+}
+*/
 
 // 1. Set Up the Controller Class:
 //    - Annotate the class with `@RestController` to indicate that it's a REST controller, used to handle web requests and return JSON responses.
@@ -23,5 +80,5 @@ public class AdminController {
 
 
 
-}
+
 

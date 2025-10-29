@@ -53,7 +53,7 @@ h2 {
   justify-content: center;
   align-items: center;
   text-align: center;
-  background-image: url("../img/background.jpg");
+ /* background-image: url("../img/background.jpg");*/
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -95,9 +95,18 @@ button:hover {
   background-color: #003e3e;
 }
 
+.doctor-card {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
 /* Modal */
 .modal {
   position: fixed
+  }
 /* this is the style sheet file for index.htlm  */
 
 /* 

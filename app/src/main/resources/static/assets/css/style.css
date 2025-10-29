@@ -161,7 +161,7 @@
     }
   }
   
-
+/*
   .modal {
     display: none;
     position: fixed;
@@ -182,7 +182,31 @@
     width: 400px;
     position: relative;
   }
-  
+  */
+
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+
+  .modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    position: relative;
+    transition: all 0.3s ease;
+  }
   .modal-content h2{
     font-size: 32px;
   }

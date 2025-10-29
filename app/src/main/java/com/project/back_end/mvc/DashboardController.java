@@ -5,8 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.http.ResponseEntity;
 
-import com.project.back_end.service.Service;
+
+import com.project.back_end.services.Services1;
 
 import java.util.Map;
 
@@ -15,31 +17,32 @@ public class DashboardController {
 
     // 2. Autowire the Shared Service
     @Autowired
-    private Service service;
+    private Services1 service;
 
     // 3. Define the adminDashboard Method
     @GetMapping("/adminDashboard/{token}")
     public Object adminDashboard(@PathVariable String token) {
-        Map<String, Object> validationResult = service.validateToken(token, "admin");
+        ResponseEntity<Map<String, String>> validationResult = service.validateToken(token, "admin");
 
-        if (validationResult.isEmpty()) {
-            return "admin/adminDashboard"; // Thymeleaf will resolve to adminDashboard.html
-        } else {
+        if (!validationResult.getStatusCode().is2xxSuccessful()) {
             return new RedirectView("/");
         }
+
+        return "admin/adminDashboard"; // Thymeleaf resolverá adminDashboard.html
     }
 
     // 4. Define the doctorDashboard Method
     @GetMapping("/doctorDashboard/{token}")
     public Object doctorDashboard(@PathVariable String token) {
-        Map<String, Object> validationResult = service.validateToken(token, "doctor");
+        ResponseEntity<Map<String, String>> validationResult = service.validateToken(token, "doctor");
 
-        if (validationResult.isEmpty()) {
-            return "doctor/doctorDashboard"; // Thymeleaf will resolve to doctorDashboard.html
-        } else {
+        if (!validationResult.getStatusCode().is2xxSuccessful()) {
             return new RedirectView("/");
         }
+
+        return "doctor/doctorDashboard"; // Thymeleaf resolverá doctorDashboard.html
     }
+
 }
 
 //package com.project.back_end.mvc;

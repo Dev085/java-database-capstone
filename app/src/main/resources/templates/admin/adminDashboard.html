@@ -5,16 +5,8 @@
     <title>Admin Dashboard</title>
 
     <!-- CSS Styles -->
-    <link rel="stylesheet" th:href="@{/assets/css/adminDashboard.css}">
-    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
-
-    <!-- JS Utilities -->
-    <script th:src="@{/js/render.js}" defer></script>
-    <script th:src="@{/js/util.js}" defer></script>
-
-    <!-- Layout Components -->
-    <script th:src="@{/js/components/header.js}" defer></script>
-    <script th:src="@{/js/components/footer.js}" defer></script>
+    <link rel="stylesheet" href="/assets/css/adminDashboard.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 
 <body>
@@ -26,23 +18,25 @@
         <!-- Main Content -->
         <main class="main-content">
             <!-- Search Bar -->
-            <label for="searchBar"></label><input type="text" id="searchBar" placeholder="search by doctor name" />
+            <input type="text" id="searchBar" placeholder="Search by doctor name" />
 
             <!-- Filters -->
             <div class="filters">
-                <label for="sortByTime"></label><select id="sortByTime">
+                <select id="filterTime">
                     <option value="">Sort by time</option>
                     <option value="asc">Earliest</option>
                     <option value="desc">Latest</option>
                 </select>
 
-                <label for="filterBySpecialty"></label><select id="filterBySpecialty">
+                <select id="filterSpecialty">
                     <option value="">Filter by specialty</option>
-                    <option value="cardiology">Cardiology</option>
-                    <option value="dermatology">Dermatology</option>
-                    <option value="pediatrics">Pediatrics</option>
-                    <!-- Add more specialties as needed -->
+                    <option value="Cardiologist">Cardiology</option>
+                    <option value="Dermatologist">Dermatology</option>
+                    <option value="Pediatrics">Pediatrics</option>
+                    <option value="General">General</option>
                 </select>
+
+
             </div>
 
             <!-- Dynamic Content -->
@@ -60,11 +54,21 @@
     <div id="modal-body"></div>
 </div>
 
+<!-- JS Utilities -->
+<script type="module" src="/js/util.js"></script>
+<script type="module" src="/js/render.js"></script>
+
+<!-- Layout Components -->
+<script type="module" src="/js/components/header.js"></script>
+<script type="module" src="/js/components/footer.js"></script>
+
 <!-- JS Services -->
-<script type="module" src="../js/services/adminDashboard.js" defer></script>
-<script type="module" src="../js/components/doctorCard.js" defer></script>
+<!--<script type="module" src="/js/services/adminDashboard.js"></script>-->
+<script type="module" src="/js/adminDashboard.js"></script>
+<script type="module" src="/js/components/doctorCard.js"></script>
 </body>
 </html>
+
 
 <!-- adminDashboard.html -->
 

@@ -1,5 +1,6 @@
 // Import Required Modules
-import { openModal } from "../components/modals.js";
+import { openModal } from "./components/modals.js";
+//import { openModal } from "../components/modals.js";
 import { getDoctors, filterDoctors, saveDoctor } from "./services/doctorServices.js";
 import { createDoctorCard } from "./components/doctorCard.js";
 
@@ -21,10 +22,13 @@ async function loadDoctorCards() {
   }
 }
 
+
 // Function: renderDoctorCards
 function renderDoctorCards(doctors) {
   const contentDiv = document.getElementById("content");
   contentDiv.innerHTML = "";
+
+
 
   if (!doctors || doctors.length === 0) {
     contentDiv.innerHTML = `<p class="noPatientRecord">No doctors found.</p>`;
@@ -46,10 +50,13 @@ document.getElementById("filterSpecialty")?.addEventListener("change", filterDoc
 async function filterDoctorsOnChange() {
   try {
     const name = document.getElementById("searchBar")?.value || null;
-    const time = document.getElementById("filterTime")?.value || null;
+    const rawTime = document.getElementById("filterTime")?.value || null;
+    const time = rawTime === "asc" ? "AM" : rawTime === "desc" ? "PM" : null;
+    //const time = document.getElementById("filterTime")?.value || null;
     const specialty = document.getElementById("filterSpecialty")?.value || null;
 
     const doctors = await filterDoctors(name, time, specialty);
+
 
     if (doctors && doctors.length > 0) {
       renderDoctorCards(doctors);

@@ -3,11 +3,14 @@ import { API_BASE_URL } from "../config/config.js";
 
 // Define a constant DOCTOR_API to hold the full endpoint for doctor-related actions
 const DOCTOR_API = API_BASE_URL + "/doctor";
+//const DOCTOR_API = API_BASE_URL + "/doctors";
+
 
 /**
  * Function: getDoctors
  * Purpose: Fetch the list of all doctors from the API
  */
+
 export async function getDoctors() {
   try {
     const response = await fetch(DOCTOR_API);
@@ -19,6 +22,27 @@ export async function getDoctors() {
     return [];
   }
 }
+/*
+export async function getDoctors() {
+  try {
+    const token = localStorage.getItem("token");
+
+    const response = await fetch(DOCTOR_API, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) throw new Error("Failed to fetch doctors");
+
+    const data = await response.json();
+    return data.doctors || [];
+  } catch (error) {
+    console.error("Error fetching doctors:", error);
+    return [];
+  }
+}
+*/
 
 /**
  * Function: deleteDoctor
@@ -76,7 +100,9 @@ export async function saveDoctor(doctor, token) {
  */
 export async function filterDoctors(name, time, specialty) {
   try {
-    const url = `${DOCTOR_API}/filter/${name || "null"}/${time || "null"}/${specialty || "null"}`;
+    const timeFilter = time === "asc" ? "AM" : time === "desc" ? "PM" : time;
+    //const url = `${DOCTOR_API}/filter/${name || "null"}/${time || "null"}/${specialty || "null"}`;
+    const url = `${DOCTOR_API}/filter/${name || "null"}/${timeFilter || "null"}/${specialty || "null"}`;
     const response = await fetch(url);
     if (response.ok) {
       const data = await response.json();

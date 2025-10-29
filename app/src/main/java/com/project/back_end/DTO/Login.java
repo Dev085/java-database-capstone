@@ -5,6 +5,31 @@ package com.project.back_end.DTO;
  * It encapsulates the identifier (email or username) and password.
  * No persistence annotations are included, as this is not a database entity.
  */
+
+public class Login {
+    private String email;
+    private String password;
+
+    public Login() {}
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+}
+
+/*
 public class Login {
 
     // The unique identifier of the user (email for Doctor/Patient, username for Admin)
@@ -33,6 +58,8 @@ public class Login {
         this.password = password;
     }
 }
+
+*/
 
 
 //package com.project.back_end.DTO;
@@ -64,4 +91,4 @@ public class Login {
 //    - The 'setPassword(String password)' method sets the password value.
 
 
-}
+

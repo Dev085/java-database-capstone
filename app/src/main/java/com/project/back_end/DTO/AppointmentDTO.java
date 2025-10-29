@@ -1,8 +1,17 @@
 package com.project.back_end.DTO;
+import com.project.back_end.models.Appointment;
+import com.project.back_end.models.Doctor;
+import com.project.back_end.models.Patient;
 
+
+import java.time.ZoneOffset;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+
 
 public class AppointmentDTO {
 
@@ -14,18 +23,72 @@ public class AppointmentDTO {
     private String patientEmail;
     private String patientPhone;
     private String patientAddress;
-    private LocalDateTime appointmentTime;
+    //private LocalDateTime appointmentTime;
     private int status;
 
     private LocalDate appointmentDate;
     private LocalTime appointmentTimeOnly;
     private LocalDateTime endTime;
 
+
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
+    private OffsetDateTime appointmentTime;
+
+
+    public AppointmentDTO(Appointment appointment) {
+        this.id = appointment.getId();
+       // this.appointmentTime = appointment.getAppointmentTime();
+        this.appointmentTime = appointment.getAppointmentTime().atOffset(ZoneOffset.systemDefault().getRules().getOffset(appointment.getAppointmentTime()));
+
+        this.status = appointment.getStatus();
+
+        this.appointmentDate = appointmentTime.toLocalDate();
+
+        this.appointmentTimeOnly = appointmentTime.toLocalTime();
+        //this.endTime = appointmentTime.plusHours(1);
+        this.endTime = appointmentTime.plusHours(1).toLocalDateTime();
+
+
+        if (appointment.getDoctor() != null) {
+            this.doctorId = appointment.getDoctor().getId();
+            this.doctorName = appointment.getDoctor().getName();
+        }
+
+        if (appointment.getPatient() != null) {
+            this.patientId = appointment.getPatient().getId();
+            this.patientName = appointment.getPatient().getName();
+            this.patientEmail = appointment.getPatient().getEmail();
+            this.patientPhone = appointment.getPatient().getPhone();
+            this.patientAddress = appointment.getPatient().getAddress();
+        }
+    }
+
     // Constructor
-    public AppointmentDTO(Long id, Long doctorId, String doctorName,
+/* 2
+    public AppointmentDTO(Appointment appointment, Doctor doctor, Patient patient) {
+        this.id = appointment.getId();
+        this.doctorId = doctor.getId();
+        this.doctorName = doctor.getName();
+        this.patientId = patient.getId();
+        this.patientName = patient.getName();
+        this.patientEmail = patient.getEmail();
+        this.patientPhone = patient.getPhone(); // asegúrate de tener este getter
+        this.patientAddress = patient.getAddress(); // asegúrate de tener este getter
+        this.appointmentTime = appointment.getAppointmentTime();
+        this.status = appointment.getStatus();
+
+        this.appointmentDate = appointmentTime.toLocalDate();
+        this.appointmentTimeOnly = appointmentTime.toLocalTime();
+        this.endTime = appointmentTime.plusHours(1);
+    }
+1
+    /*public AppointmentDTO(Long id, Long doctorId, String doctorName,
                           Long patientId, String patientName, String patientEmail,
                           String patientPhone, String patientAddress,
                           LocalDateTime appointmentTime, int status) {
+
+
 
         this.id = id;
         this.doctorId = doctorId;
@@ -43,7 +106,7 @@ public class AppointmentDTO {
         this.appointmentTimeOnly = appointmentTime.toLocalTime();
         this.endTime = appointmentTime.plusHours(1);
     }
-
+*/
     // Getters
     public Long getId() {
         return id;
@@ -77,9 +140,13 @@ public class AppointmentDTO {
         return patientAddress;
     }
 
-    public LocalDateTime getAppointmentTime() {
+   /* public LocalDateTime getAppointmentTime() {
         return appointmentTime;
-    }
+    }*/
+   public OffsetDateTime getAppointmentTime() {
+       return appointmentTime;
+   }
+
 
     public int getStatus() {
         return status;

@@ -102,6 +102,31 @@ public class Appointment {
     @NotNull
     private int status; // 0 = Scheduled, 1 = Completed
 
+
+    @Column(name = "date")
+    private LocalDate date;
+
+    @Column(name = "time_slot")
+    private String timeSlot;
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public String getTimeSlot() {
+        return timeSlot;
+    }
+
+    public void setTimeSlot(String timeSlot) {
+        this.timeSlot = timeSlot;
+    }
+
+
+
     // Helper method: returns end time (1 hour after start)
     @Transient
     public LocalDateTime getEndTime() {
@@ -137,6 +162,7 @@ public class Appointment {
     public void setDoctor(Doctor doctor) {
         this.doctor = doctor;
     }
+
 
     public Patient getPatient() {
         return patient;

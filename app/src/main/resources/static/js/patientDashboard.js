@@ -1,4 +1,5 @@
 // patientDashboard.js
+
 import { getDoctors } from './services/doctorServices.js';
 import { openModal } from './components/modals.js';
 import { createDoctorCard } from './components/doctorCard.js';
@@ -61,7 +62,8 @@ function filterDoctorsOnChange() {
 
   filterDoctors(name, time, specialty)
     .then(response => {
-      const doctors = response.doctors;
+      //const doctors = response.doctors;
+      const doctors = response;
       const contentDiv = document.getElementById("content");
       contentDiv.innerHTML = "";
 
@@ -117,13 +119,23 @@ window.loginPatient = async function () {
     const response = await patientLogin(data);
     console.log("Status Code:", response.status);
     console.log("Response OK:", response.ok);
+
     if (response.ok) {
       const result = await response.json();
       console.log(result);
-      selectRole('loggedPatient');
+      localStorage.setItem('token', result.token);
+      localStorage.setItem('userRole', 'loggedPatient'); // ← esta línea es clave
+      window.location.href = '/pages/loggedPatientDashboard.html';
+    }
+/*
+    if (response.ok) {
+      const result = await response.json();
+      console.log(result);
+      //selectRole('loggedPatient');
       localStorage.setItem('token', result.token)
       window.location.href = '/pages/loggedPatientDashboard.html';
-    } else {
+    } */
+    else {
       alert('❌ Invalid credentials!');
     }
   }

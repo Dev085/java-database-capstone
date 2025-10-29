@@ -1,7 +1,9 @@
 // Import required helper functions
 import { deleteDoctor } from "../services/doctorServices.js";
 import { getPatientData } from "../services/patientServices.js";
-import { showBookingOverlay } from "../components/loggedPatient.js";
+//import { showBookingOverlay } from "../components/loggedPatient.js";
+import { showBookingOverlay } from "../loggedPatient.js";
+
 
 // Function to create and return a DOM element for a single doctor card
 export function createDoctorCard(doctor) {
@@ -30,7 +32,14 @@ export function createDoctorCard(doctor) {
 
   // Create and list available appointment times
   const availability = document.createElement("p");
-  availability.textContent = `Available: ${doctor.availableTimes?.join(", ") || "N/A"}`;
+  console.log("Available times for", doctor.name, ":", doctor.availableTimes); //new
+  //availability.textContent = `Available: ${doctor.availableTimes?.join(", ") || "N/A"}`;
+  const times = Array.isArray(doctor.availableTimes) && doctor.availableTimes.length > 0
+    ? doctor.availableTimes.join(", ")
+    : "N/A";
+
+  availability.textContent = `Available: ${times}`;
+
 
   // Append all info elements to the doctor info container
   infoDiv.appendChild(name);

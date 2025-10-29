@@ -1,6 +1,6 @@
 package com.project.back_end.repo;
 
-import com.project.back_end.model.Appointment;
+import com.project.back_end.models.Appointment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -32,6 +32,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     // 4. Find all appointments for a patient
     List<Appointment> findByPatientId(Long patientId);
 
+
     // 5. Find appointments by patient and status, ordered by time
     List<Appointment> findByPatient_IdAndStatusOrderByAppointmentTimeAsc(Long patientId, int status);
 
@@ -50,6 +51,13 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     @Transactional
     @Query("UPDATE Appointment a SET a.status = :status WHERE a.id = :id")
     void updateStatus(int status, long id);
+
+    List<Appointment> findByPatientIdAndAppointmentTimeBetween(Long patientId, LocalDateTime start, LocalDateTime end);
+
+    //List<Appointment> findByPatientId(Long patientId);
+
+
+
 }
 
 //package com.project.back_end.repo;

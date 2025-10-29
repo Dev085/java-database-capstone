@@ -99,9 +99,13 @@ public class Doctor {
     @Pattern(regexp = "^\\d{10}$", message = "Phone number must be exactly 10 digits")
     private String phone;
 
-    @ElementCollection
+   //@ElementCollection
+   @Transient
     private List<String> availableTimes; // Example: ["09:00 - 10:00", "14:00 - 15:00"]
-
+/*
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> availableTimes;
+*/
     // Getters and setters
 
     public Long getId() {
@@ -136,6 +140,9 @@ public class Doctor {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
     public void setPassword(String password) {
         this.password = password;
     }

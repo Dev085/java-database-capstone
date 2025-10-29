@@ -92,6 +92,10 @@ public class Patient {
     @Size(max = 255)
     private String address;
 
+    private String gender;
+
+    private int age;
+
     // Getters and setters
 
     public Long getId() {
@@ -105,6 +109,11 @@ public class Patient {
     public String getName() {
         return name;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
 
     public void setName(String name) {
         this.name = name;
@@ -138,6 +147,19 @@ public class Patient {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+    public int getAge() {
+        return age;
+    }
+    public void setAge(int age) {
+        this.age = age;
     }
 }
 

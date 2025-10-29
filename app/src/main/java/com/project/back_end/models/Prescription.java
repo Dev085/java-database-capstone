@@ -79,6 +79,10 @@ public class Prescription {
     @Size(min = 1)
     private List<Medication> medications;
 
+    @NotNull
+    private Long appointmentId;
+
+
     private List<String> tags;
 
     private Metadata metadata;
@@ -159,6 +163,14 @@ public class Prescription {
 
     public String getNotes() { return notes; }
     public void setNotes(String notes) { this.notes = notes; }
+
+    public Long getAppointmentId() {
+        return appointmentId;
+    }
+    public void setAppointmentId(Long appointmentId) {
+        this.appointmentId = appointmentId;
+    }
+
 }
 
 

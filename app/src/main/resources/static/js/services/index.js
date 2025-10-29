@@ -1,5 +1,168 @@
 // Import the openModal function to handle showing login popups/modals
+// Import the openModal function to handle showing login popups/modals
+// index.js
+// index.js
 import { openModal } from "../components/modals.js";
+import { selectRole } from "../render.js";
+import { API_BASE_URL } from "../config/config.js";
+
+const ADMIN_API = API_BASE_URL + "/admin/login";
+const DOCTOR_API = API_BASE_URL + "/doctor/login"; // pendiente de implementación
+
+window.onload = function () {
+  // Botones para abrir modales de login
+  document.getElementById("adminLogin")?.addEventListener("click", () => openModal("adminLogin"));
+  document.getElementById("doctorLogin")?.addEventListener("click", () => openModal("doctorLogin"));
+
+  // Botones de selección de rol
+  document.getElementById("adminBtn")?.addEventListener("click", () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Admin token missing. Please log in.");
+      return;
+    }
+    selectRole("admin");
+  });
+
+  document.getElementById("doctorBtn")?.addEventListener("click", () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Doctor token missing. Please log in.");
+      return;
+    }
+    selectRole("doctor");
+  });
+
+  document.getElementById("patientBtn")?.addEventListener("click", () => {
+    selectRole("patient"); // no requiere token
+  });
+};
+
+// Función de login para administrador
+window.adminLoginHandler = async function () {
+  try {
+    const username = document.getElementById("adminUsername")?.value;
+    const password = document.getElementById("adminPassword")?.value;
+
+    if (!username || !password) {
+      alert("Please enter both username and password.");
+      return;
+    }
+
+    const response = await fetch(ADMIN_API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok && data.token) {
+      localStorage.setItem("token", data.token);
+      alert("Login successful!");
+      selectRole("admin");
+    } else {
+      alert(data.error || "Invalid credentials.");
+    }
+  } catch (error) {
+    console.error("Admin login error:", error);
+    alert("Something went wrong. Please try again.");
+  }
+};
+
+/*
+import { openModal } from "../components/modals.js";
+import { API_BASE_URL } from "../config/config.js";
+import { selectRole } from "../render.js";
+
+const ADMIN_API = API_BASE_URL + "/admin";
+const DOCTOR_API = API_BASE_URL + "/doctor/login";
+
+window.onload = function () {
+  // Modal login buttons
+  const adminLoginBtn = document.getElementById("adminLogin");
+  const doctorLoginBtn = document.getElementById("doctorLogin");
+
+  if (adminLoginBtn) {
+    adminLoginBtn.addEventListener("click", () => openModal("adminLogin"));
+  }
+
+  if (doctorLoginBtn) {
+    doctorLoginBtn.addEventListener("click", () => openModal("doctorLogin"));
+  }
+
+  // Role selection buttons
+  const adminBtn = document.getElementById("adminBtn");
+  const doctorBtn = document.getElementById("doctorBtn");
+  const patientBtn = document.getElementById("patientBtn");
+
+  if (adminBtn) {
+    adminBtn.addEventListener("click", () => selectRole("admin"));
+  }
+
+  if (doctorBtn) {
+    doctorBtn.addEventListener("click", () => selectRole("doctor"));
+  }
+
+  if (patientBtn) {
+    patientBtn.addEventListener("click", () => selectRole("patient"));
+  }
+};
+
+// Admin login handler
+window.adminLoginHandler = async function () {
+  try {
+    const username = document.getElementById("adminUsername")?.value;
+    const password = document.getElementById("adminPassword")?.value;
+    const admin = { username, password };
+
+    const response = await fetch(ADMIN_API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(admin),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      localStorage.setItem("token", data.token);
+      selectRole("admin");
+    } else {
+      alert("Invalid credentials!");
+    }
+  } catch (error) {
+    console.error("Admin login error:", error);
+    alert("Something went wrong. Please try again.");
+  }
+};
+
+// Doctor login handler
+window.doctorLoginHandler = async function () {
+  try {
+    const email = document.getElementById("doctorEmail")?.value;
+    const password = document.getElementById("doctorPassword")?.value;
+    const doctor = { email, password };
+
+    const response = await fetch(DOCTOR_API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(doctor),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      localStorage.setItem("token", data.token);
+      selectRole("doctor");
+    } else {
+      alert("Invalid credentials!");
+    }
+  } catch (error) {
+    console.error("Doctor login error:", error);
+    alert("Something went wrong. Please try again.");
+  }
+};
+*/
+
+/*import { openModal } from "../components/modals.js";
 
 // Import the base API URL from the config file
 import { API_BASE_URL } from "../config/config.js";
@@ -95,7 +258,7 @@ window.doctorLoginHandler = async function () {
     alert("Something went wrong. Please try again.");
   }
 };
-
+*/
 /*
   Import the openModal function to handle showing login popups/modals
   Import the base API URL from the config file

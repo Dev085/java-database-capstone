@@ -58,14 +58,34 @@ async function initializePage() {
           return;
         }
 
+// ✅ Validación de fecha futura
+      const now = new Date();
+      const selectedDate = new Date(`${date}T${startTime}:00`);
+      if (selectedDate <= now) {
+        alert("❌ Appointment time must be in the future.");
+        return;
+      }
+
+
+
+      const updatedAppointment = {
+        id: Number(appointmentId),
+        doctor: { id: Number(doctor.id) },
+        patient: { id: Number(patientId) }, // ✅ necesario para validación
+        date: date,
+        timeSlot: startTime
+      };
+
+
+
+/*
         const updatedAppointment = {
-          id: appointmentId,
-          doctor: { id: doctor.id },
-          patient: { id: patientId },
+          id: Number(appointmentId),
+          doctor: { id: Number(doctor.id) },
+          patient: { id: Number(patientId) },
           appointmentTime: `${date}T${startTime}:00`,
           status: 0
-        };
-
+        };*/
         const updateResponse = await updateAppointment(updatedAppointment, token);
 
         if (updateResponse.success) {
